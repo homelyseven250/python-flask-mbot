@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select an option</title>
+</head>
+<body>
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+<h2>Select an option</h2>
+<button type="button" onclick="sendCommand('/buzz')">Buzz!</button>
+<br>
+<input id="speed" type="text" placeholder="speed">
+<button type="button" onclick="move(1)">Forward</button>
+<button type="button" onclick="move(2)">Backward</button>
+<button type="button" onclick="move(3)">Left</button>
+<button type="button" onclick="move(4)">Right</button>
+<button type="button" onclick="sendCommand('/stop')">Stop</button>
+
+<p id ="response"></p>
+</body>
+</html>

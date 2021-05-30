@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> mBot web control</title>
+    <link rel="preconnect" href="http://localhost:5000">
+
+    <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io@4/client-dist/socket.io.min.js"></script>
+
+
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="mBot browser based control.">
+    <meta name="theme-color" content="#0000ff">
+</head>
+
+<body>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <main>
+        <div id="main">
+            <button onclick="buzz();">Buzz</button>
+            <br>
+            <label for="speed">Speed:</label>
+            <input type="number" min="0" value="75" oninput="validity.valid||(value='');" id="speed">
+            <button onclick="move('form',1);">Forward</button>
+            <button onclick="move('form',2);">Backward</button>
+            <button onclick="move('form',3);">Left</button>
+            <button onclick="move('form',4);">Right</button>
+            <button onclick="move(0,1);">Stop</button>
+
+            <p id="sensors">
+                Light Sensor:
+                <span id="lightSensorSpan"></span>
+                <br>
+                <img src="{{ url_for('static', filename='mbot.png') }}" alt="Image of an mBot">
+            </p>
+            <!-- <form action="javascript:void();" id="testForm">
+                    <input type="number" min="0" oninput="validity.valid||(value='');" id="ledX">
+                    <input type="number" min="0" oninput="validity.valid||(value='');" id="ledY">
+                    <input type="submit" id="submit">
+                </form> -->
+            <br>
+            <span id="response"></span>
+
+        </div>
+
+        <!-- Modal HTML embedded directly into document -->
+        <!-- <div id="ledEditor" class="modal"> -->
+        <svg height="163" width="323" id="canvas"></svg>
+        <!-- </div> -->
+
+        <!-- Link to open the modal -->
+        <!-- <p><a href="#ledEditor" rel="modal:open">Open Modal</a></p> -->
+        <button onclick="clearScreen();">Clear Screen</button>
+        <button onclick="saveDrawing();">Save</button>
+        <button onclick="showDrawings();">Show Drawings</button>
+        <div id="saved">
+        </div>
+    </main>
+
+
+
+
+</body>
+
+</html>
