@@ -36,23 +36,14 @@
                 <br>
                 <img src="{{ url_for('static', filename='mbot.png') }}" alt="Image of an mBot">
             </p>
-            <!-- <form action="javascript:void();" id="testForm">
-                    <input type="number" min="0" oninput="validity.valid||(value='');" id="ledX">
-                    <input type="number" min="0" oninput="validity.valid||(value='');" id="ledY">
-                    <input type="submit" id="submit">
-                </form> -->
             <br>
             <span id="response"></span>
 
         </div>
-
-        <!-- Modal HTML embedded directly into document -->
-        <!-- <div id="ledEditor" class="modal"> -->
+        <button id="sendText">Send Text</button>
+        <input type="text" id="sendTextInput">
         <svg height="163" width="323" id="canvas"></svg>
-        <!-- </div> -->
-
-        <!-- Link to open the modal -->
-        <!-- <p><a href="#ledEditor" rel="modal:open">Open Modal</a></p> -->
+        <br>
         <button onclick="clearScreen();">Clear Screen</button>
         <button onclick="saveDrawing();">Save</button>
         <button onclick="showDrawings();">Show Drawings</button>

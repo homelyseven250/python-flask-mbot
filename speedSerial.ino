@@ -11,11 +11,16 @@ MeDCMotor motor_9(9);
 MeDCMotor motor_10(10);
 MeLightSensor lightsensor_6(6);
 
-
+const byte numChars = 32;
 int ledX;
 int ledY;
 unsigned char drawBuffer[16];
 unsigned char *drawTemp;
+char txtToShow[numChars] = {0};
+bool isShowingText = false;
+int lastCharTime = 0;
+int txtLoopCount = 0;
+String textToShow = "";
 
 unsigned char toDraw[16][8] = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -50,7 +55,7 @@ void renderToDraw() {
 
 // Example 5 - Receive with start- and end-markers combined with parsing
 
-const byte numChars = 32;
+
 char receivedChars[numChars];
 char tempChars[numChars];        // temporary array for use when parsing
 
@@ -98,9 +103,9 @@ void loop() {
             // this temporary copy is necessary to protect the original data
             //   because strtok() used in parseData() replaces the commas with \0
         parseData();
-        showParsedData();
         newData = false;
     }
+    showText();
 }
 
 //============
@@ -187,6 +192,13 @@ void parseData() {      // split the data into its parts
             }
         }
         ledMtx_1.clearScreen();
+    } else{
+        txtLoopCount = 0;
+        textToShow = receivedChars;
+        ledMtx_1.drawStr(0,0+7,String(textToShow[txtLoopCount]).c_str());
+        isShowingText = true;
+        lastCharTime = millis();
+
     }
 
 
@@ -199,7 +211,14 @@ void parseData() {      // split the data into its parts
 }
 
 //============
-
-void showParsedData() {
-    ;
+void showText(){
+    if (txtLoopCount > sizeof(textToShow)) {
+        isShowingText = false;
+        txtLoopCount = 0;
+    }
+    if ((millis() - lastCharTime) >= 500 && isShowingText) {
+        txtLoopCount++;
+        ledMtx_1.drawStr(0,0+7,String(receivedChars[txtLoopCount]).c_str());
+        lastCharTime = millis();
+    }
 }

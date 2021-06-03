@@ -8,7 +8,7 @@ import serial
 async_mode = None
 app = Flask(__name__)
 socket_ = SocketIO(app, async_mode=async_mode)
-mbot = serial.Serial("/dev/rfcomm0", 115200)
+mbot = serial.Serial("/dev/ttyUSB1", 115200)
 
 
 @app.route('/')
@@ -62,6 +62,11 @@ def ledSend(dict):
 @socket_.on('clearScreen')
 def clearScreen():
     mbot.write('<c>'.encode('utf-8'))
+
+@socket_.on('sendText')
+def sendTXT(dict):
+    print(dict)
+    mbot.write(('<'+dict['text']+'>').encode('utf-8'))
 
 
 # def queryMbotResponse():

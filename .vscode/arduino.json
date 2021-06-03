@@ -1,7 +1,7 @@
 {
     "board": "arduino:avr:uno",
     "programmer": "arduino:avrisp",
-    "port": "/dev/ttyUSB0",
+    "port": "/dev/ttyUSB1",
     "sketch": "speedSerial.ino",
     "output": "./build"
 }

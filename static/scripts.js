@@ -269,3 +269,8 @@ window.addEventListener("keyup", function (event) {
     // Cancel the default action to avoid it being handled twice
     event.preventDefault();
 }, true);
+
+function sendtext() {
+    text = document.getElementById('sendTextInput')
+    socket.emit('sendText', {text: text.value});
+}
