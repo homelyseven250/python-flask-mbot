@@ -7,6 +7,8 @@ var modal = document.getElementById("popup");
 var btn = document.getElementById("ledPopup");
 
 var socket = io();
+var isDisplayingText = false;
+var text;
 
 function buzz() {
     socket.emit('json', { data: 'buzz' });
@@ -28,14 +30,16 @@ const listener = (args) => {
 socket.on("response", listener);
 
 function lightSensorPoll() {
-    socket.emit('lightSensorPoll');
+    if (!isDisplayingText) {
+        socket.emit('lightSensorPoll');
+    }    
 }
 
 const lightSensorListener = (args) => {
     var lightSensorSpan = document.getElementById("lightSensorSpan");
     lightSensorSpan.innerHTML = args;
 }
-setInterval(lightSensorPoll, 500);
+// setInterval(lightSensorPoll, 500);
 
 socket.on("lightSensor", lightSensorListener);
 
@@ -272,5 +276,11 @@ window.addEventListener("keyup", function (event) {
 
 function sendtext() {
     text = document.getElementById('sendTextInput')
+    isDisplayingText = true;
+    window.setTimeout(finishedShowingText,text.length*1000)
     socket.emit('sendText', {text: text.value});
+}
+
+function finishedShowingText() {
+    isDisplayingText = false;
 }
